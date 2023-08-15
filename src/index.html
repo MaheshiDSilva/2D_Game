@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2D Game</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <style>
+
+        .body{
+            margin: 0px;
+        }
+        .background{
+            width: 100%;
+            height: 100vh;
+            background-image: url("assets/img/background.jpg");
+            background-size: cover;
+            background-repeat: repeat-x;
+        }
+        .boy{
+            height: 300px;
+            margin-top: 450px;
+            position: absolute;
+        }
+
+    </style>
+
+</head>
+<body class="body" onload="idleAnimationStart()" onkeypress="keyCheck(event)">
+<div class="background" id="background">
+    <img src="assets/img/Idle%20(1).png" class="boy" id="boy" alt="">
+</div>
+
+<script src="assets/js/bootstrap.js"></script>
+<script>
+
+    var boy=document.getElementById("boy");
+    IdleImageNumber=1;
+    idleAnimationNumber=0;
+
+    function idleAnimation(){
+        IdleImageNumber=IdleImageNumber+1;
+        if (IdleImageNumber==11){
+            IdleImageNumber=1;
+        }
+
+        boy.src="assets/img/Idle%20("+ IdleImageNumber +").png";
+    }
+
+    function idleAnimationStart(){
+        idleAnimationNumber=setInterval(idleAnimation,200)
+    }
+
+    RunImageNumber=1;
+    runAnimationNumber=0;
+
+    function runAnimation(){
+        RunImageNumber=RunImageNumber+1;
+
+        if (RunImageNumber==11){
+            RunImageNumber=1;
+        }
+
+        boy.src="assets/img/Run%20("+ RunImageNumber +").png";
+    }
+
+    function RunAnimationStart(){
+        runAnimationNumber=setInterval(runAnimation,100);
+        clearInterval(idleAnimationNumber);
+    }
+
+    jumpAnimationNumber=0;
+    JumpImageNumber=1;
+
+    function jumpAnimation(){
+        JumpImageNumber=JumpImageNumber+1;
+        if (JumpImageNumber==11){
+            JumpImageNumber=1;
+            clearInterval(jumpAnimationNumber);
+            jumpAnimationNumber=0;
+            RunImageNumber=0;
+            RunAnimationStart();
+        }
+
+        boy.src="assets/img/Jump%20("+ JumpImageNumber +").png";
+    }
+
+    function jumpAnimationStart(){
+        clearInterval(idleAnimationNumber);
+        RunImageNumber=0;
+        clearInterval(runAnimationNumber);
+        jumpAnimationNumber=setInterval(jumpAnimation,100);
+    }
+
+    function keyCheck(event){
+        // alert(event.which);
+        // enter=13
+        //space=32
+
+        var keyCode=event.which;
+
+        if (keyCode==13){
+            if (runAnimationNumber==0){
+                RunAnimationStart();
+            }
+
+        if (moveBackgroundAnimationId==0){
+            moveBackgroundAnimationId=setInterval(moveBackground,100);
+        }
+
+    }
+
+    if (keyCode==32){
+        if (jumpAnimationNumber==0){
+            jumpAnimationStart();
+        }
+
+        if (moveBackgroundAnimationId==0){
+            moveBackgroundAnimationId=setInterval(moveBackground,100);
+        }
+    }
+    }
+
+    var backgroundImagePositionX=0;
+    var moveBackgroundAnimationId=0;
+
+    function moveBackground(){
+        backgroundImagePositionX=backgroundImagePositionX-20;
+
+        document.getElementById("background").style.backgroundPositionX=backgroundImagePositionX+"px";
+    }
+
+</script>
+</body>
+</html>
