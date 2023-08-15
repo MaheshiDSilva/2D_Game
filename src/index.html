@@ -70,9 +70,20 @@
 
     jumpAnimationNumber=0;
     JumpImageNumber=1;
+    boyMarginTop=450;
 
     function jumpAnimation(){
         JumpImageNumber=JumpImageNumber+1;
+
+        if (JumpImageNumber<=6){
+            boyMarginTop=boyMarginTop-20;
+            boy.style.marginTop=boyMarginTop+"px"
+        }
+        if (JumpImageNumber>=7){
+            boyMarginTop=boyMarginTop+20;
+            boy.style.marginTop=boyMarginTop+"px";
+        }
+
         if (JumpImageNumber==11){
             JumpImageNumber=1;
             clearInterval(jumpAnimationNumber);
