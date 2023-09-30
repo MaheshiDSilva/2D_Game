@@ -13,23 +13,28 @@
         .background {
             width: 100%;
             height: 100vh;
-            background-image: url("assets/img/background.jpg");
+            background-image: url("assets/img/background1.jpg");
             background-size: cover;
             background-repeat: repeat-x;
+            overflow-x: hidden;
+            position: absolute;
         }
 
         .boy {
             height: 300px;
-            margin-top: 450px;
+            margin-top: 350px;
             position: absolute;
         }
 
         .box{
-            width: 100px;
-            height: 100px;
-            background-color: red;
+            width: 250px;
+            height: 250px;
+            /*background-color: red;*/
             position: absolute;
-            margin-top: 630px;
+            margin-top: 500px;
+            background-image: url("assets/img/spyro-dragon.gif");
+            background-size: contain;
+            background-repeat: no-repeat;
         }
 
 
@@ -129,6 +134,10 @@
                 moveBackgroundAnimationId = setInterval(moveBackground, 100);
             }
 
+            if (boxAnimationId==0){
+                boxAnimationId=setInterval(boxAnimation,100);
+            }
+
         }
 
         if (keyCode == 32) {
@@ -138,6 +147,10 @@
 
             if (moveBackgroundAnimationId == 0) {
                 moveBackgroundAnimationId = setInterval(moveBackground, 100);
+            }
+
+            if (boxAnimationId==0){
+                boxAnimationId=setInterval(boxAnimation,100);
             }
         }
     }
@@ -151,7 +164,7 @@
         document.getElementById("background").style.backgroundPositionX = backgroundImagePositionX + "px";
     }
 
-    boxMarginLeft=500;
+    boxMarginLeft=1485;
 
     function createBoxes(){
 
@@ -161,10 +174,28 @@
             box.className="box";
             document.getElementById("background").appendChild(box);
             box.style.marginLeft=boxMarginLeft+"px";
-            boxMarginLeft=boxMarginLeft+800;
+            // boxMarginLeft=boxMarginLeft+800;
+            box.id="box"+i;
+
+            if (i<5){
+                boxMarginLeft=boxMarginLeft+1000;
+            }
+            if (i>=5){
+                boxMarginLeft=boxMarginLeft+500;
+            }
 
         }
 
+    }
+
+    var boxAnimationId=0;
+    function boxAnimation(){
+        for (var i = 0; i < 10; i++) {
+            var box=document.getElementById("box"+i);
+            var currentMarginLeft=getComputedStyle(box).marginLeft;
+            var newMarginLeft=parseInt(currentMarginLeft)-25;
+            box.style.marginLeft=newMarginLeft+"px";
+        }
     }
 
 </script>
