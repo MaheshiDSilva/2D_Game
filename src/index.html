@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>2D Game</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/normalize.css">
     <style>
 
         .body {
             margin: 0px;
+
         }
 
         .background {
-            width: 100%;
+            width: 100vw;
             height: 100vh;
             background-image: url("assets/img/background1.jpg");
             background-size: cover;
@@ -21,32 +24,59 @@
         }
 
         .boy {
-            height: 300px;
-            margin-top: 350px;
+            height: 260px;
+            /*height: 300px;*/
+            margin-top: 390px;
+            /*margin-top: 350px;*/
             position: absolute;
         }
 
         .box{
-            width: 250px;
-            height: 250px;
+            /*width: 250px;*/
+            /*height: 250px;*/
+            width: 160px;
+            height: 160px;
             /*background-color: red;*/
             position: absolute;
-            margin-top: 500px;
+            margin-top: 600px;
+            /*margin-top: 500px;*/
             background-image: url("assets/img/spyro-dragon.gif");
             background-size: contain;
             background-repeat: no-repeat;
         }
 
+        .score{
+            font-size: 50px;
+            font-weight: bold;
+            margin-left: 30px;
+            margin-top: 20px;
+            position: absolute;
+        }
+
+
 
     </style>
+
+
 
 </head>
 <body class="body" onkeypress="keyCheck(event)" onload="idleAnimationStart();createBoxes()">
 <div class="background" id="background">
     <img alt="" class="boy" id="boy" src="assets/img/Idle%20(1).png">
+
+    <div class="score" id="score">0</div>
+</div>
+
+<div class="end" id="end">
+    <div style="color: rgb(251,255,11)">Game Over</div>
+    <div style="color: rgb(145,189,0)">Your Score</div>
+    <div style="color: rgb(54,200,223) " id="endScore">0</div>
+    <button class="btn" onclick="reload()">Try Again</button>
+
 </div>
 
 <script src="assets/js/bootstrap.js"></script>
+
 <script>
 
     var boy = document.getElementById("boy");
@@ -66,7 +96,7 @@
         idleAnimationNumber = setInterval(idleAnimation, 200)
     }
 
-    RunImageNumber = 1;
+    RunImageNumber = 0;
     runAnimationNumber = 0;
 
     function runAnimation() {
@@ -86,17 +116,18 @@
 
     jumpAnimationNumber = 0;
     JumpImageNumber = 1;
-    boyMarginTop = 450;
+    boyMarginTop = 490;
+    // boyMarginTop = 450;
 
     function jumpAnimation() {
         JumpImageNumber = JumpImageNumber + 1;
 
         if (JumpImageNumber <= 6) {
-            boyMarginTop = boyMarginTop - 20;
+            boyMarginTop = boyMarginTop - 35;
             boy.style.marginTop = boyMarginTop + "px"
         }
         if (JumpImageNumber >= 7) {
-            boyMarginTop = boyMarginTop + 20;
+            boyMarginTop = boyMarginTop + 35;
             boy.style.marginTop = boyMarginTop + "px";
         }
 
@@ -131,7 +162,7 @@
             }
 
             if (moveBackgroundAnimationId == 0) {
-                moveBackgroundAnimationId = setInterval(moveBackground, 100);
+                moveBackgroundAnimationId = setInterval(moveBackground, 90);
             }
 
             if (boxAnimationId==0){
@@ -158,13 +189,19 @@
     var backgroundImagePositionX = 0;
     var moveBackgroundAnimationId = 0;
 
+    var score=0;
+
     function moveBackground() {
         backgroundImagePositionX = backgroundImagePositionX - 20;
 
         document.getElementById("background").style.backgroundPositionX = backgroundImagePositionX + "px";
+
+        score = score+1;
+        document.getElementById("score").innerHTML=score;
     }
 
-    boxMarginLeft=1485;
+    boxMarginLeft=1985;
+    // boxMarginLeft=1485;
 
     function createBoxes(){
 
@@ -178,10 +215,10 @@
             box.id="box"+i;
 
             if (i<5){
-                boxMarginLeft=boxMarginLeft+1000;
+                boxMarginLeft=boxMarginLeft+2000;
             }
             if (i>=5){
-                boxMarginLeft=boxMarginLeft+500;
+                boxMarginLeft=boxMarginLeft+1000;
             }
 
         }
@@ -193,10 +230,22 @@
         for (var i = 0; i < 10; i++) {
             var box=document.getElementById("box"+i);
             var currentMarginLeft=getComputedStyle(box).marginLeft;
-            var newMarginLeft=parseInt(currentMarginLeft)-25;
+            var newMarginLeft=parseInt(currentMarginLeft)-35;
             box.style.marginLeft=newMarginLeft+"px";
+
+            if (newMarginLeft>=-110 & newMarginLeft<=100 ) {
+                if (boyMarginTop > 300) {
+                    clearInterval(boxAnimationId);
+
+
+                }
+            }
         }
     }
+
+
+
+
 
 </script>
 </body>
