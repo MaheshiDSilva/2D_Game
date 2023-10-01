@@ -237,7 +237,16 @@
                 if (boyMarginTop > 300) {
                     clearInterval(boxAnimationId);
 
+                    clearInterval(runAnimationNumber);
+                    runAnimationNumber = -1;
 
+                    clearInterval(jumpAnimationNumber);
+                    jumpAnimationNumber = -1;
+
+                    clearInterval(moveBackgroundAnimationId);
+                    moveBackgroundAnimationId = -1;
+
+                    deadAnimationNumber = setInterval(boyDeadAnimation,100);
                 }
             }
         }
